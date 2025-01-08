@@ -23,7 +23,18 @@
     </a-marker>
     
     <!-- Камера -->
-    <a-entity camera position="0 0 5" look-controls fov="75"></a-entity>
+    <a-scene embedded arjs>
+      <a-camera id="camera" position="0 0 5"></a-camera>
+      <script>
+        // Ограничение зума камеры
+        const camera = document.querySelector('#camera');
+        camera.addEventListener('componentchanged', (event) => {
+          if (event.detail.name === 'position' && camera.object3D.position.z < 2) {
+            camera.object3D.position.z = 2; // Минимальная дистанция
+          }
+        });
+      </script>
+    </a-scene>
   </a-scene>
 
   <script>
